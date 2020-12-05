@@ -1,0 +1,66 @@
+﻿---
+layout: post
+title:  "unbuntu配置MySQL服务器!"
+date:   2020-12-05 21:51:04 +0800
+categories: jekyll update
+
+---
+## unbuntu配置MySQL服务器
+在服务器上安装MySql，并配置使得我们可以远程访问mysql。
+
+服务器镜像：ubuntu20.04
+## 第一步：安装MySql
+安装mysql，打开终端，输入命令安装MySQL服务端
+
+```
+sudo apt-get install mysql-server 
+```
+输入命令安装MySQL客户端，命令如下：
+
+```
+sudo apt-get install mysql-client
+```
+
+安装libmysqlclient,这个在使用开发工具连接数据库使用会用到，命令如下：
+
+```
+sudo apt-get install libmysqlclient-dev 
+```
+查看mysql是否安装成功
+
+```
+mysql -V
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201202234806119.png)
+
+## 第二步：授权用户远程登陆
+首先登陆mysql
+
+```
+sudo mysql -u root -p
+```
+接下来授权一个用户可以远程访问
+
+```
+GRANT ALL PRIVILEGES ON *.* TO 'username'@'%' ;
+```
+刷新权限
+
+```
+FLUSH PRIVILEGES;
+```
+更改mysql配置文件
+
+```
+sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+```
+
+注释掉bind-address = 127.0.0.1
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201202234956581.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Fienp4MTIz,size_16,color_FFFFFF,t_70)
+
+重启MySql服务，即可远程连接
+
+```
+service mysql restart
+```
+
